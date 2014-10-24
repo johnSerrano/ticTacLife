@@ -8,4 +8,4 @@ Wound up with a fun little framework for playing with AI.
 
 The method takeTurn in class Turner is the place to put any AI code.
 
-Compile TicTacLife.java and run, or use the precompiled files.
+Compile TicTacLife.java and run.
