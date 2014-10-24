@@ -1,10 +1,10 @@
 //Author: John Serrano
 //Free to use and distribute
 //AI code goes in Turner.takeTurn()
-
+import javax.swing.*;
+import java.awt.Font;
 
 public class TicTacLife{
-    static int turnCount = 0;
     static int boardSize = 12;
 
     public static void main(String[] args){
@@ -17,7 +17,7 @@ public class TicTacLife{
 	showBoard(board);
 
 	Turner turner = new Turner();
-
+	
 	//main loop
 	while(true){
 
@@ -31,6 +31,7 @@ public class TicTacLife{
 	    
 	    showBoard(board);
 	}
+	new myWindow(board);
 	System.out.println("END");
     }
 
@@ -132,4 +133,37 @@ class O extends mark{
 	if (other.c.equals("O")) return true;
 	return false;
     }
+}
+
+class myWindow extends JFrame{
+    String[][] board;
+    
+    myWindow(){
+	JLabel label = new JLabel("No board to display");
+	add(label);
+	this.setSize(400, 400);
+	setVisible(true);
+    }
+
+    myWindow(String[][] board){
+	setArray(board);
+	String toDisplay = "<html>";
+        for (int i = 0; i < board.length; i++){
+	    for (int j = 0; j < board.length; j++){
+		toDisplay = toDisplay + board[j][i] + " ";
+	    }
+	    toDisplay = toDisplay + "<br>";
+	}
+	toDisplay = toDisplay + "</html>";
+	JLabel label = new JLabel(toDisplay, SwingConstants.CENTER);
+	label.setFont(new Font("Courier New", Font.BOLD, 12));
+	add(label);
+	this.setSize(200, 200);
+	setVisible(true);
+    }
+    
+    void setArray(String[][] board){
+	this.board = board;
+    }
+    
 }
