@@ -4,7 +4,6 @@
 
 
 public class TicTacLife{
-    static int turnCount = 0;
     static int boardSize = 12;
 
     public static void main(String[] args){
