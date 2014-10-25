@@ -14,9 +14,10 @@ public class TicTacLife{
 		board[j][i] = ".";
 	    }
 	}
-	showBoard(board);
-
+	
 	Turner turner = new Turner();
+
+	myWindow window = new myWindow(board);
 	
 	//main loop
 	while(true){
@@ -28,10 +29,13 @@ public class TicTacLife{
 
 	    board[myMark.getX()][myMark.getY()] = myMark.c;
 	    //does not check legality, do that in takeTurn
-	    
-	    showBoard(board);
+
+	    try{Thread.sleep(1000);}
+	    catch (InterruptedException ex){
+	    }
+
+	    window.update();
 	}
-	new myWindow(board);
 	System.out.println("END");
     }
 
@@ -147,6 +151,14 @@ class myWindow extends JFrame{
 
     myWindow(String[][] board){
 	setArray(board);
+	update();
+    }
+    
+    void setArray(String[][] board){
+	this.board = board;
+    }
+    
+    void update(){
 	String toDisplay = "<html>";
         for (int i = 0; i < board.length; i++){
 	    for (int j = 0; j < board.length; j++){
@@ -160,10 +172,6 @@ class myWindow extends JFrame{
 	add(label);
 	this.setSize(200, 200);
 	setVisible(true);
-    }
-    
-    void setArray(String[][] board){
-	this.board = board;
     }
     
 }
