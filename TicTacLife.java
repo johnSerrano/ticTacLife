@@ -1,7 +1,9 @@
 //Author: John Serrano
 //Free to use and distribute
 //AI code goes in Turner.takeTurn()
+
 import javax.swing.*;
+import javax.swing.border.*;
 import java.awt.Font;
 
 public class TicTacLife{
@@ -70,6 +72,15 @@ class Turner{
 	    result.c="X"; //why is this necessary? probably to do with casting
 	    return result;
 	}
+
+	else if (turnX){
+
+	}
+	
+	else if (!turnX){
+
+	}
+
 	//return null if no valid move
 	return null;
     }
@@ -141,6 +152,8 @@ class O extends mark{
 
 class myWindow extends JFrame{
     String[][] board;
+    String toDisplay;
+    JLabel boardL;
     
     myWindow(){
 	JLabel label = new JLabel("No board to display");
@@ -150,16 +163,9 @@ class myWindow extends JFrame{
     }
 
     myWindow(String[][] board){
+	this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	setArray(board);
-	update();
-    }
-    
-    void setArray(String[][] board){
-	this.board = board;
-    }
-    
-    void update(){
-	String toDisplay = "<html>";
+	toDisplay = "<html>";
         for (int i = 0; i < board.length; i++){
 	    for (int j = 0; j < board.length; j++){
 		toDisplay = toDisplay + board[j][i] + " ";
@@ -167,10 +173,34 @@ class myWindow extends JFrame{
 	    toDisplay = toDisplay + "<br>";
 	}
 	toDisplay = toDisplay + "</html>";
-	JLabel label = new JLabel(toDisplay, SwingConstants.CENTER);
-	label.setFont(new Font("Courier New", Font.BOLD, 12));
-	add(label);
-	this.setSize(200, 200);
+	boardL = new JLabel(toDisplay, SwingConstants.CENTER);
+	boardL.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.RAISED));
+	boardL.setFont(new Font("Courier New", Font.BOLD, 12));
+	add(boardL);
+	this.setSize(400, 400);
+	setVisible(true);
+    }
+    
+    void setArray(String[][] board){
+	this.board = board;
+    }
+    
+    void update(){
+	toDisplay = "<html>";
+        for (int i = 0; i < board.length; i++){
+	    for (int j = 0; j < board.length; j++){
+		toDisplay = toDisplay + board[j][i] + " ";
+	    }
+	    toDisplay = toDisplay + "<br>";
+	}
+	toDisplay = toDisplay + "</html>";
+	
+	this.remove(boardL); //delete old board
+	boardL = new JLabel(toDisplay, SwingConstants.CENTER);
+	boardL.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.RAISED));
+	boardL.setFont(new Font("Courier New", Font.BOLD, 12));
+	add(boardL);
+	this.setSize(400, 400);
 	setVisible(true);
     }
     
