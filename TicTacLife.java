@@ -5,6 +5,8 @@
 import javax.swing.*;
 import javax.swing.border.*;
 import java.awt.Font;
+import java.awt.BorderLayout;
+import java.lang.Math;
 
 public class TicTacLife{
     static int boardSize = 12;
@@ -32,12 +34,14 @@ public class TicTacLife{
 	    board[myMark.getX()][myMark.getY()] = myMark.c;
 	    //does not check legality, do that in takeTurn
 
+	    int scoreX = score("X", board);
+	    
 	    try{Thread.sleep(1000);}
 	    catch (InterruptedException ex){
 	    }
 
-	    window.update();
-	}
+	    window.update(score("X", board), score("O", board));
+ 	}
 	System.out.println("END");
     }
 
@@ -49,6 +53,62 @@ public class TicTacLife{
 	    System.out.print("\n");
 	}
 	System.out.println("*************");
+    }
+
+    private static int score(String toScore, String[][] board){
+	int lineLength = 0;
+	int pts = 0;
+
+	//score vertically NOTE: single mark counts for no points
+	for (int i = 0; i < boardSize; i++){
+	    for (int j = 0; j < boardSize; j++){
+		if (board[i][j].equals(toScore) && j<(boardSize-1)){
+		    if (board[i][j+1].equals(toScore)){
+			lineLength++;
+		    }
+		    else{
+			if (lineLength!=0){
+			    pts = (int) Math.pow(2, lineLength) + pts;
+			}
+			lineLength = 0;
+		    }
+		}
+		else{
+		    if (lineLength!=0){
+			pts = (int) Math.pow(2, lineLength) + pts;
+		    }
+		    lineLength = 0;
+		}
+	    }
+	}
+
+	//score horizontally
+	for (int i = 0; i < boardSize; i++){
+	    for (int j = 0; j < boardSize; j++){
+		if (board[j][i].equals(toScore) && j<(boardSize-1)){
+		    if (board[j+1][i].equals(toScore)){
+			lineLength++;
+		    }
+		    else if (lineLength!=0){
+			    pts = (int) Math.pow(2, lineLength) + pts;
+			    lineLength = 0;
+			}
+		}
+		else if (lineLength!=0){
+		    pts = (int) Math.pow(2, lineLength) + pts;
+		    lineLength = 0;
+		}	
+	    }
+	}
+	
+	//score diagonally
+	//todo
+	
+	
+	//score diagonally other direction
+	//todo
+
+	return pts;
     }
 }
 
@@ -73,8 +133,22 @@ class Turner{
 	    return result;
 	}
 
-	else if (turnX){
+	else if (turnCount==1){
+	    turnCount++;
+	    result = new O(2,3);
+	    result.c="O";
+	    return result;
+	}
 
+	else if (turnCount==2){
+	    turnCount++;
+	    result = new X(3,2);
+	    result.c="X";
+	    return result;
+	}
+
+	else if (turnX){
+	    
 	}
 	
 	else if (!turnX){
@@ -91,6 +165,7 @@ abstract class mark{
     abstract int getY();
     abstract void setX(int x);
     abstract void setY(int y);
+    abstract String getC();
     abstract boolean equals(mark other);
 }
 class X extends mark{
@@ -115,6 +190,9 @@ class X extends mark{
     }
     void setY(int y){
 	this.y = y;
+    }
+    String getC(){
+	return "X";
     }
     boolean equals(mark other){
 	if (other.c.equals("X")) return true;
@@ -144,8 +222,11 @@ class O extends mark{
     void setY(int y){
 	this.y = y;
     }
+    String getC(){
+	return "O";
+    }
     boolean equals(mark other){
-	if (other.c.equals("O")) return true;
+	if (other.getC().equals("O")) return true;
 	return false;
     }
 }
@@ -154,6 +235,7 @@ class myWindow extends JFrame{
     String[][] board;
     String toDisplay;
     JLabel boardL;
+    JLabel score;
     
     myWindow(){
 	JLabel label = new JLabel("No board to display");
@@ -164,6 +246,7 @@ class myWindow extends JFrame{
 
     myWindow(String[][] board){
 	this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	this.setLayout(new BorderLayout());
 	setArray(board);
 	toDisplay = "<html>";
         for (int i = 0; i < board.length; i++){
@@ -176,7 +259,15 @@ class myWindow extends JFrame{
 	boardL = new JLabel(toDisplay, SwingConstants.CENTER);
 	boardL.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.RAISED));
 	boardL.setFont(new Font("Courier New", Font.BOLD, 12));
-	add(boardL);
+ 	add(boardL, BorderLayout.CENTER);
+
+	JLabel header = new JLabel("TIC TAC LIFE\n\n", SwingConstants.CENTER);
+	add(header, BorderLayout.PAGE_START);
+
+	score = new JLabel("<html>Player 1 (X):<br>0<br><br>Player 2 (O):<br>0</html>", SwingConstants.CENTER);
+	score.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.RAISED));
+	add(score, BorderLayout.LINE_START);
+
 	this.setSize(400, 400);
 	setVisible(true);
     }
@@ -185,7 +276,7 @@ class myWindow extends JFrame{
 	this.board = board;
     }
     
-    void update(){
+    void update(int scoreX, int scoreO){
 	toDisplay = "<html>";
         for (int i = 0; i < board.length; i++){
 	    for (int j = 0; j < board.length; j++){
@@ -199,7 +290,14 @@ class myWindow extends JFrame{
 	boardL = new JLabel(toDisplay, SwingConstants.CENTER);
 	boardL.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.RAISED));
 	boardL.setFont(new Font("Courier New", Font.BOLD, 12));
-	add(boardL);
+	add(boardL, BorderLayout.CENTER);
+
+	this.remove(score);
+	String scoreLabel = "<html>Player 1 (X):<br>" + scoreX + "<br><br>Player 2 (O):<br>" + scoreO + "</html>";
+	score = new JLabel(scoreLabel, SwingConstants.CENTER);
+	score.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.RAISED));
+	add(score, BorderLayout.LINE_START);
+
 	this.setSize(400, 400);
 	setVisible(true);
     }
