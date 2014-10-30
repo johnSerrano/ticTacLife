@@ -33,8 +33,6 @@ public class TicTacLife{
 
 	    board[myMark.getX()][myMark.getY()] = myMark.c;
 	    //does not check legality, do that in takeTurn
-
-	    int scoreX = score("X", board);
 	    
 	    try{Thread.sleep(1000);}
 	    catch (InterruptedException ex){
@@ -42,10 +40,10 @@ public class TicTacLife{
 
 	    window.update(score("X", board), score("O", board));
  	}
-	System.out.println("END");
+	//System.out.println("END");
     }
 
-    private static void showBoard(String[][] board){
+    private static void showBoard(String[][] board){ //vestigial method
 	for (int i = 0; i < boardSize; i++){
 	    for (int j = 0; j < boardSize; j++){
 		System.out.print(board[j][i] + " ");
@@ -102,11 +100,124 @@ public class TicTacLife{
 	}
 	
 	//score diagonally
-	//todo
-	
-	
+
+	int x = 0, y = 0;
+
+	while (x!=boardSize-1 || y!=boardSize-1){
+	    if (y==0 && x==0){
+		y++;
+	    }
+	    while (y > 0 && x < boardSize-1){
+		
+		if (board[x][y].equals(toScore)){
+		    if (board[x+1][y-1].equals(toScore)){
+			lineLength++;
+		    }
+		    else if (lineLength!=0){
+			    pts = (int) Math.pow(2, lineLength) + pts;
+			    lineLength = 0;
+			}
+		}
+		else if (lineLength!=0){
+		    pts = (int) Math.pow(2, lineLength) + pts;
+		    lineLength = 0;
+		}
+		x++;
+		y--;
+	    }
+	    if (x < boardSize-1){
+		x++;
+	    }
+	    else if(x == boardSize-1){
+		y++;
+	    }
+	    if (lineLength!=0){
+		pts = (int) Math.pow(2, lineLength) + pts;
+		lineLength = 0;
+	    }
+	    while (x > 0 && y < boardSize-1){
+		if (board[x][y].equals(toScore)){
+		    if (board[x-1][y+1].equals(toScore)){
+			lineLength++;
+		    }
+		    else if (lineLength!=0){
+			    pts = (int) Math.pow(2, lineLength) + pts;
+			    lineLength = 0;
+			}
+		}
+		else if (lineLength!=0){
+		    pts = (int) Math.pow(2, lineLength) + pts;
+		    lineLength = 0;
+		}
+		x--;
+		y++;
+	    }
+	    if (y < boardSize-1){
+		y++;
+	    }
+	    else if(y == boardSize-1 && x < boardSize-1){
+		x++;
+	    }
+	    if (lineLength!=0){
+		pts = (int) Math.pow(2, lineLength) + pts;
+		lineLength = 0;
+	    }
+	}
+
 	//score diagonally other direction
 	//todo
+	x = 1; 
+	y = boardSize-1;
+	while(x < boardSize-1 || y > 0){
+	    while (x>0 && y>0){
+		if (board[x][y].equals(toScore)){
+		    if (board[x-1][y-1].equals(toScore)){
+			lineLength++;
+		    }
+		    else if (lineLength!=0){
+			    pts = (int) Math.pow(2, lineLength) + pts;
+			    lineLength = 0;
+			}
+		}
+		else if (lineLength!=0){
+		    pts = (int) Math.pow(2, lineLength) + pts;
+		    lineLength = 0;
+		}
+		x--; y--;
+	    }
+	    if (y > 0){
+		y--;
+	    }
+	    else if (y == 0){
+		x++;
+	    }
+	    while (x < boardSize-1 && y < boardSize-1){
+		if (board[x][y].equals(toScore)){
+		    if (board[x+1][y+1].equals(toScore)){
+			lineLength++;
+		    }
+		    else if (lineLength!=0){
+			    pts = (int) Math.pow(2, lineLength) + pts;
+			    lineLength = 0;
+			}
+		}
+		else if (lineLength!=0){
+		    pts = (int) Math.pow(2, lineLength) + pts;
+		    lineLength = 0;
+		}
+		x++; y++;
+	    }
+	    if (x < boardSize-1){
+		x++;
+	    }
+	    else if (x == boardSize-1 && y < 0){
+		y--;
+	    }
+	    if (lineLength!=0){
+		pts = (int) Math.pow(2, lineLength) + pts;
+		lineLength = 0;
+	    }
+	}
 
 	return pts;
     }
@@ -142,7 +253,7 @@ class Turner{
 
 	else if (turnCount==2){
 	    turnCount++;
-	    result = new X(3,2);
+	    result = new X(3,1);
 	    result.c="X";
 	    return result;
 	}
