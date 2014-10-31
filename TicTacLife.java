@@ -11,7 +11,7 @@ import java.lang.Math;
 import java.util.Scanner;
 
 public class TicTacLife{
-    static int boardSize = 12;
+    static int boardSize = 5;
 
     public static void main(String[] args){
 	String board[][] = new String[boardSize][boardSize];
@@ -195,13 +195,11 @@ class myWindow extends JFrame{
 			lineLength++;
 		    }
 		    else if (lineLength!=0){
-			System.out.println("199 increasing points from "+pts);
 			    pts = (int) Math.pow(2, lineLength) + pts;
 			    lineLength = 0;
 			}
 		}
 		else if (lineLength!=0){
-		    System.out.println("205 increasing points from "+pts);
 		    pts = (int) Math.pow(2, lineLength) + pts;
 		    lineLength = 0;
 		}
@@ -215,7 +213,6 @@ class myWindow extends JFrame{
 		y++;
 	    }
 	    if (lineLength!=0){
-		System.out.println("219 increasing points from "+pts);
 		pts = (int) Math.pow(2, lineLength) + pts;
 		lineLength = 0;
 	    }
@@ -225,13 +222,11 @@ class myWindow extends JFrame{
 			lineLength++;
 		    }
 		    else if (lineLength!=0){
-			System.out.println("229 increasing points from "+pts);
 			pts = (int) Math.pow(2, lineLength) + pts;
 			lineLength = 0;
 			}
 		}
 		else if (lineLength!=0){
-		    System.out.println("235 increasing points from "+pts);
 		    pts = (int) Math.pow(2, lineLength) + pts;
 		    lineLength = 0;
 		}
@@ -245,7 +240,6 @@ class myWindow extends JFrame{
 		x++;
 	    }
 	    if (lineLength!=0){
-		System.out.println("249 increasing points from "+pts);
 		pts = (int) Math.pow(2, lineLength) + pts;
 		lineLength = 0;
 	    }
