@@ -196,11 +196,13 @@ class myWindow extends JFrame{
 			lineLength++;
 		    }
 		    else if (lineLength!=0){
+			System.out.println("199 increasing points from "+pts);
 			    pts = (int) Math.pow(2, lineLength) + pts;
 			    lineLength = 0;
 			}
 		}
 		else if (lineLength!=0){
+		    System.out.println("205 increasing points from "+pts);
 		    pts = (int) Math.pow(2, lineLength) + pts;
 		    lineLength = 0;
 		}
@@ -214,6 +216,7 @@ class myWindow extends JFrame{
 		y++;
 	    }
 	    if (lineLength!=0){
+		System.out.println("219 increasing points from "+pts);
 		pts = (int) Math.pow(2, lineLength) + pts;
 		lineLength = 0;
 	    }
@@ -223,11 +226,13 @@ class myWindow extends JFrame{
 			lineLength++;
 		    }
 		    else if (lineLength!=0){
-			    pts = (int) Math.pow(2, lineLength) + pts;
-			    lineLength = 0;
+			System.out.println("229 increasing points from "+pts);
+			pts = (int) Math.pow(2, lineLength) + pts;
+			lineLength = 0;
 			}
 		}
 		else if (lineLength!=0){
+		    System.out.println("235 increasing points from "+pts);
 		    pts = (int) Math.pow(2, lineLength) + pts;
 		    lineLength = 0;
 		}
@@ -241,13 +246,13 @@ class myWindow extends JFrame{
 		x++;
 	    }
 	    if (lineLength!=0){
+		System.out.println("249 increasing points from "+pts);
 		pts = (int) Math.pow(2, lineLength) + pts;
 		lineLength = 0;
 	    }
 	}
 
 	//score diagonally other direction
-	//todo
 	x = 1; 
 	y = boardSize-1;
 	while(x < boardSize-1 || y > 0){
@@ -257,8 +262,8 @@ class myWindow extends JFrame{
 			lineLength++;
 		    }
 		    else if (lineLength!=0){
-			    pts = (int) Math.pow(2, lineLength) + pts;
-			    lineLength = 0;
+			pts = (int) Math.pow(2, lineLength) + pts;
+			lineLength = 0;
 			}
 		}
 		else if (lineLength!=0){
@@ -273,14 +278,15 @@ class myWindow extends JFrame{
 	    else if (y == 0){
 		x++;
 	    }
+
 	    while (x < boardSize-1 && y < boardSize-1){
 		if (board[x][y].equals(toScore)){
 		    if (board[x+1][y+1].equals(toScore)){
 			lineLength++;
 		    }
 		    else if (lineLength!=0){
-			    pts = (int) Math.pow(2, lineLength) + pts;
-			    lineLength = 0;
+			pts = (int) Math.pow(2, lineLength) + pts;
+			lineLength = 0;
 			}
 		}
 		else if (lineLength!=0){
@@ -292,7 +298,7 @@ class myWindow extends JFrame{
 	    if (x < boardSize-1){
 		x++;
 	    }
-	    else if (x == boardSize-1 && y < 0){
+	    else if (x == boardSize-1 && y > 0){
 		y--;
 	    }
 	    if (lineLength!=0){
