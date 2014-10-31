@@ -33,7 +33,6 @@ class myWindow extends JFrame{
     JPanel bottom;
 
     static int boardSize;
-
     boolean turnX = true;
     
     myWindow(){
