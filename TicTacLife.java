@@ -28,8 +28,7 @@ public class TicTacLife{
 class myWindow extends JFrame{
     String[][] board;
     String toDisplay;
-    JLabel boardL;
-    JLabel score;
+    JLabel boardL, turn, score;
     JPanel bottom;
 
     static int boardSize;
@@ -71,10 +70,14 @@ class myWindow extends JFrame{
 	
 	JTextField entry = new JTextField(4);
 	bottom.add(entry);
-	
+
 	JButton submit = new JButton("submit");
 	submit.addActionListener(new submitListener(this, entry));
 	bottom.add(submit);
+
+	turn = new JLabel("X");
+	turn.setFont(new Font("Courier New", Font.BOLD, 12));
+	bottom.add(turn);
 
 	add(bottom, BorderLayout.PAGE_END);
 
@@ -107,6 +110,12 @@ class myWindow extends JFrame{
 	score = new JLabel(scoreLabel, SwingConstants.CENTER);
 	score.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.RAISED));
 	add(score, BorderLayout.LINE_START);
+
+	bottom.remove(turn);
+	if (turnX) turn = new JLabel("X");
+	else turn = new JLabel("O");
+	turn.setFont(new Font("Courier New", Font.BOLD, 12));
+	bottom.add(turn);
 
 	this.setSize(400, 400);
 	setVisible(true);
@@ -299,7 +308,6 @@ class myWindow extends JFrame{
 		lineLength = 0;
 	    }
 	}
-
 	return pts;
     }
 }
