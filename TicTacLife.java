@@ -127,8 +127,11 @@ class myWindow extends JFrame{
 	Scanner scan = new Scanner(coords);
 	int x = scan.nextInt();
 	int y = scan.nextInt();
-	//handle exceptions: out of bounds, not an integer, occupied position
+	//handle exceptions: not an integer
 	//todo
+
+	//exit if out of bounds or occupied
+	if(((x > boardSize-1 || x < 0) || (y > boardSize-1 || y < 0)) || !(board[x][y].equals("."))) return;
 
 	//update turnx, make label in window to display
 	turnX = !turnX;
