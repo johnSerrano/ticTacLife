@@ -1,6 +1,5 @@
 //Author: John Serrano
 //Free to use and distribute
-//AI code goes in Turner.takeTurn()
 
 import javax.swing.*;
 import javax.swing.border.*;
